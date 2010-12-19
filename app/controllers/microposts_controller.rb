@@ -3,7 +3,9 @@ class MicropostsController < ApplicationController
   before_filter :authorized_user, :only => :destroy
 
   def create
+    params[:micropost][:in_reply_to] = in_reply_to
     @micropost = current_user.microposts.build(params[:micropost])
+
     if @micropost.save
       flash[:success] = "Micropost created!"
       redirect_to root_path
@@ -19,6 +21,13 @@ class MicropostsController < ApplicationController
   end
   
   private
+  
+  def in_reply_to
+    matchingUser = params[:micropost][:content].match(/\A@[\w+\-.]+/).to_s
+    if matchingUser
+      return matchingUser[1..-1] 
+    end
+  end
   
   def authorized_user
     @micropost = Micropost.find(params[:id])

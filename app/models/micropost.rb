@@ -1,5 +1,5 @@
 class Micropost < ActiveRecord::Base
-  attr_accessible :content
+  attr_accessible :content, :in_reply_to
   
   belongs_to :user
   
@@ -15,7 +15,9 @@ class Micropost < ActiveRecord::Base
   def self.followed_by(user)
     followed_ids = %(SELECT followed_id FROM relationships
                       WHERE follower_id = :user_id)
-    where("user_id IN (#{followed_ids}) OR user_id = :user_id",
-          { :user_id => user })
+    where("user_id IN (#{followed_ids})
+          OR user_id = :user_id
+            OR in_reply_to = :username" ,
+          { :user_id => user, :username => user.username })
   end
 end
