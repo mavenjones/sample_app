@@ -16,7 +16,8 @@ def make_users
                          :email => "example@railstutorial.org",
                          :password => "foobar",
                          :password_confirmation => "foobar",
-                         :username => "ExampleAdmin1")
+                         :username => "ExampleAdmin1"
+                         )
     admin.toggle!(:admin)
     
  

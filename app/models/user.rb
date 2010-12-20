@@ -1,7 +1,8 @@
 require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :username, :name, :email, :password, :password_confirmation
+  attr_accessible :username, :name, :email,
+                  :password, :password_confirmation, :email_notifications
   
   has_many :microposts, :dependent => :destroy
   has_many :relationships, :foreign_key => "follower_id",
@@ -27,7 +28,8 @@ class User < ActiveRecord::Base
                         :confirmation =>true,
                         :length => {:within => 6..40}
                         
-  before_save :encrypt_password
+  before_save :encrypt_password, :default_values
+  
   
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
@@ -61,6 +63,11 @@ class User < ActiveRecord::Base
   end
   
   private
+  
+  def default_values
+    #self.email_notifications = true
+  end
+  
   
     def encrypt_password
       self.salt = make_salt if new_record?

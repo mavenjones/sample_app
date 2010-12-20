@@ -2,6 +2,11 @@
 
 <%= form_for(@user) do |f| %>
   <%= render 'fields', :f => f %>
+  
+  <div class="field">
+    <%= f.check_box :email_notifications %> Recieve email notifications?
+  </div>
+  
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
