@@ -5,8 +5,19 @@ SampleApp::Application.routes.draw do
     member do
       get :following, :followers
     end
+
+    collection do
+     post :recover
+    end
   end
-  resources :sessions, :only => [:new, :create, :destroy]
+  
+  resources :sessions do #, :only => [:new, :create, :destroy]
+    member do
+      get :recovery
+    end
+  end
+  
+    
   resources :microposts, :only => [:create, :destroy]
   resources :relationships, :only => [:create, :destroy]
   
@@ -21,6 +32,8 @@ SampleApp::Application.routes.draw do
   
   get "pages/help"
   
+  get "pages/accountrecovery"
+  
   match '/signup', :to => 'users#new'
   match '/signin', :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
@@ -28,6 +41,7 @@ SampleApp::Application.routes.draw do
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
+  match '/accountrecovery', :to => 'pages#accountrecovery'
   
   root :to => 'pages#home'
 
