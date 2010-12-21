@@ -1,3 +1,9 @@
-<%= @user.name %>,
-Thank you for registering!  Your user name is: <%= @user.username %>
+<%= @name %>,
+Thank you for registering!  Your user name is: <%= @username %>
+
+Please click the following link to activate your account:
+<%= "http://#{@domain}/sessions/#{@key}/activation" %>
+
+
+
 

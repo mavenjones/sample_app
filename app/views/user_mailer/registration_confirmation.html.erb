@@ -1,0 +1,7 @@
+<%= @name %>,<br>
+Thank you for registering!  Your user name is: <%= @username %><br>
+
+Please click the following link to activate your account:<br />
+<br />
+<% url = "http://#{@domain}/sessions/#{@key}/activation" %>
+<%= link_to url, url %>

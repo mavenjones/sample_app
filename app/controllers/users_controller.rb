@@ -23,10 +23,19 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      UserMailer.registration_confirmation(@user).deliver
-      sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      UserMailer.registration_confirmation(:key => Crypto.encrypt("#{@user.id}:#{@user.salt}"),
+                          :email => @user.email, :name => @user.name, :username => @user.username,
+                          :domain => request.env['HTTP_HOST']).deliver
+      #sign_in @user
+      flash[:success] = "Welcome to the Sample App!  Please check your email to verify your account and login."
+      #redirect_to @user
+      
+      
+      #@user.activate #for testing:activates user automatically after signup
+      
+      redirect_to root_path
+      
+      
     else
       @user.password=""
       @user.password_confirmation=""

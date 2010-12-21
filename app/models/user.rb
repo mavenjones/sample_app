@@ -1,7 +1,8 @@
 require 'digest'
 class User < ActiveRecord::Base
+  
   attr_accessor :password
-  attr_accessible :username, :name, :email,
+  attr_accessible :username, :name, :email, :active,
                   :password, :password_confirmation, :email_notifications
   
   has_many :microposts, :dependent => :destroy
@@ -28,7 +29,7 @@ class User < ActiveRecord::Base
                         :confirmation =>true,
                         :length => {:within => 6..40}
                         
-  before_save :encrypt_password, :default_values
+  before_save :encrypt_password
   
   
   def has_password?(submitted_password)
@@ -62,11 +63,11 @@ class User < ActiveRecord::Base
     Micropost.from_users_followed_by(self)
   end
   
-  private
-  
-  def default_values
-    #self.email_notifications = true
+  def activate
+    self.update_attributes(:active => true)
   end
+  
+  private
   
   
     def encrypt_password

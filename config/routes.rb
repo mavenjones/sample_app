@@ -13,7 +13,7 @@ SampleApp::Application.routes.draw do
   
   resources :sessions do #, :only => [:new, :create, :destroy]
     member do
-      get :recovery
+      get :recovery, :activation
     end
   end
   
