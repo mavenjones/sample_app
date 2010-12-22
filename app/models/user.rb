@@ -67,6 +67,15 @@ class User < ActiveRecord::Base
     self.update_attributes(:active => true)
   end
   
+  def self.search(search)
+    if search
+     find(:all, :conditions => ['name LIKE ? or username LIKE ?',
+                                "%#{search}%","%#{search}%"])
+    else
+      find(:all)
+    end
+  end
+  
   private
   
   

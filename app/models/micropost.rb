@@ -20,4 +20,13 @@ class Micropost < ActiveRecord::Base
             OR in_reply_to = :username" ,
           { :user_id => user, :username => user.username })
   end
+  
+  def self.search(search)
+    if search
+     find(:all, :conditions => ['content LIKE ?',
+                                "%#{search}%"])
+    else
+      find(:all)
+    end
+  end
 end

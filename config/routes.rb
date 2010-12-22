@@ -18,7 +18,7 @@ SampleApp::Application.routes.draw do
   end
   
     
-  resources :microposts, :only => [:create, :destroy]
+  resources :microposts, :only => [:create, :destroy, :index]
   resources :relationships, :only => [:create, :destroy]
   
 

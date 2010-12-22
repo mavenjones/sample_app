@@ -20,6 +20,11 @@ class MicropostsController < ApplicationController
     redirect_back_or root_path
   end
   
+  def index
+    @title= "Micropost Results"
+    @microposts = Micropost.search(params[:search]).paginate(:page => params[:page])
+  end
+  
   private
   
   def in_reply_to

@@ -1,0 +1,9 @@
+<% if @microposts.empty? %>
+  <p>Sorry, no results. :(
+<% else %>
+  
+  <table class="microposts" summary="Search Results">
+      <%= render :partial => 'shared/feed_item', :collection => @microposts %>
+  </table>
+  <%= will_paginate @microposts %>
+<% end %>
